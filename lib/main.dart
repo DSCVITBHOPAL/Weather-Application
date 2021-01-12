@@ -24,10 +24,22 @@ class _HomeState extends State<Home>{
   var humidity;
   var windspeed;
   Future getWeather () async{
-   http.Response response= await http.get();
+   http.Response response= await http.get("http://api.openweathermap.org/data/2.5/weather?q=Delhi&appid=775bb17b2b4769a26acb8863016acb77");
+   var results= jsonDecode(response.body);
+   setState(() {
+     this.temp = results['main']['temp'];
+     this.description = results['weather'][0]['description'];
+     this.currently = results['weather'][0]['main'];
+     this.humidity = results['main']['humidity'];
+     this.windspeed = results['wind']['speed'];
+   });
   }  
-
-  @override
+   @override
+   void initState(){
+     super.initState();
+     this.getWeather();
+   }
+   @override
   Widget build (BuildContext context){
     return Scaffold(
     body:Column(
@@ -53,7 +65,7 @@ class _HomeState extends State<Home>{
            ),
            ),
            Text(
-             "52\u00B0",
+             temp != null ? temp.toString() + "\u00B0" : "Loading",
              style: TextStyle(
                color: Colors.white,
                fontSize: 40.0,
@@ -63,7 +75,7 @@ class _HomeState extends State<Home>{
            Padding(
            padding: EdgeInsets.only(bottom:10.0),
            child:Text(
-            "Rain",
+            currently != null ? currently.toString() : "Loading",
             style: TextStyle(
               color:Colors.white,
               fontSize: 14.0,
@@ -82,22 +94,22 @@ class _HomeState extends State<Home>{
               ListTile(
                leading: FaIcon(FontAwesomeIcons.thermometer),
                title: Text("Temperature"),
-               trailing:Text("52\u00B0"),
+               trailing:Text(temp != null ? temp.toString() + "\u00B0" : "Loading"),
               ),
               ListTile(
                leading: FaIcon(FontAwesomeIcons.cloud),
                title: Text("Wheather"),
-               trailing:Text("Wheather"),
+               trailing:Text(description != null ? description.toString() : "Loading"),
               ),
               ListTile(
                leading: FaIcon(FontAwesomeIcons.sun),
-               title: Text("Temperahumidityture"),
-               trailing:Text("12"),
+               title: Text("Humidity"),
+               trailing:Text(humidity != null ? humidity.toString() : "Loading"),
               ),
               ListTile(
                leading: FaIcon(FontAwesomeIcons.wind),
                title: Text("WindSpeed"),
-               trailing:Text("12"),
+               trailing:Text(windspeed != null ? windspeed.toString() : "Loading"),
               ),
               ],
             ),
