@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
     void getWeather(city) async {
       try {
         http.Response response = await http.get(
-            "https://api.openweathermap.org/data/2.5/weather?q=$city&&appid=775bb17b2b4769a26acb8863016acb77");
+            "https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&appid=775bb17b2b4769a26acb8863016acb77");
         var results = jsonDecode(response.body);
         print(results['cod']);
         if (results['cod'] == '404') {
@@ -95,7 +95,7 @@ class _HomeState extends State<Home> {
             Container(
               height: MediaQuery.of(context).size.height / 3,
               width: MediaQuery.of(context).size.width,
-              color: Colors.red,
+              color: Colors.blue,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
