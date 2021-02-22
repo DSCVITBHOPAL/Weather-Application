@@ -172,7 +172,7 @@ class _HomeState extends State<Home> {
                     ),
                     ListTile(
                       leading: FaIcon(FontAwesomeIcons.wind),
-                      title: Text("WindSpeed"),
+                      title: Text("Windspeed"),
                       trailing: Text(
                           windspeed != null ? windspeed.toString() : "Loading"),
                     ),
